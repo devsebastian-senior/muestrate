@@ -8,7 +8,11 @@ export default async function AdminAjustesPage() {
   return (
     <div>
       <h2 className="mb-4 text-xl font-semibold">Ajustes del curso</h2>
-      <CourseSettings course={course} />
+      {course ? (
+        <CourseSettings course={course} />
+      ) : (
+        <p className="text-sm text-[var(--color-muted)]">No hay curso para editar.</p>
+      )}
     </div>
   );
 }

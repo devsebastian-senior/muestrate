@@ -9,8 +9,23 @@ export const metadata = { title: "Inicio" };
 
 export default async function DashboardPage() {
   const user = await getSessionUser();
-  const { course, totalLessons, completedLessons, progressPct, nextLessonId, streakDays } =
-    await getDashboard(user.id);
+  const data = await getDashboard(user.id);
+
+  if (!data) {
+    return (
+      <div className="mx-auto max-w-xl px-6 py-24 text-center">
+        <h1 className="text-2xl font-bold">Aún no tienes acceso al curso</h1>
+        <p className="mt-2 text-[var(--color-muted)]">
+          Cuando completes tu compra, tu curso aparecerá aquí.
+        </p>
+        <Button asChild className="mt-6">
+          <Link href="/comprar">Ver el curso</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  const { course, totalLessons, completedLessons, progressPct, nextLessonId, streakDays } = data;
   const next = course.modules.flatMap((m) => m.lessons).find((l) => l.id === nextLessonId);
 
   return (

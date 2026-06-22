@@ -17,9 +17,9 @@ export default function AccesoPage() {
       subtitle="Bienvenido de vuelta"
       footer={
         <>
-          ¿No tienes cuenta?{" "}
-          <Link href="/registro" className="font-medium text-[var(--color-fg)] hover:underline">
-            Crear cuenta
+          ¿Aún no tienes acceso?{" "}
+          <Link href="/comprar" className="font-medium text-[var(--color-fg)] hover:underline">
+            Compra el curso
           </Link>
         </>
       }

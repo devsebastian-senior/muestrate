@@ -7,7 +7,16 @@ export const metadata = { title: "Certificado" };
 
 export default async function CertificadoPage() {
   const user = await getSessionUser();
-  const { course, progressPct } = await getDashboard(user.id);
+  const data = await getDashboard(user.id);
+  if (!data) {
+    return (
+      <div className="mx-auto max-w-xl px-6 py-24 text-center">
+        <h1 className="text-2xl font-bold">Certificado no disponible</h1>
+        <p className="mt-2 text-[var(--color-muted)]">Necesitas acceso al curso primero.</p>
+      </div>
+    );
+  }
+  const { course, progressPct } = data;
   const completed = progressPct >= 100;
 
   return (

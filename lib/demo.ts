@@ -1,5 +1,9 @@
 /**
- * Flag de modo demo: true cuando NO hay DB conectada (Fase 0).
- * La capa de datos (lib/data) usa esto para devolver datos demo en vez de DB.
+ * Flags del frontend.
+ * - isDemoMode: sin backend API conectado → la capa de datos devuelve demo.
+ * - supabaseConfigured: hay Supabase → auth real (login/registro/Google funcionan).
  */
-export const isDemoMode = () => !process.env.DATABASE_URL;
+export const isDemoMode = () => !process.env.NEXT_PUBLIC_API_URL;
+
+export const supabaseConfigured = () =>
+  Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);

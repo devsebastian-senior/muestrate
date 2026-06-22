@@ -28,3 +28,6 @@ yarn-error.log*
 .vercel
 *.tsbuildinfo
 build.log
+
+# logs
+*.log

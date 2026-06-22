@@ -5,8 +5,8 @@ import { Loader2 } from "lucide-react";
 import { Button, type ButtonProps } from "@/components/ui/button";
 
 /**
- * Botón de compra. Llama a /api/checkout y redirige a la pasarela.
- * En Fase 0 (sin Stripe configurado) muestra el error de forma controlada.
+ * Botón de compra. Llama al backend API (/checkout) y redirige a la pasarela.
+ * Sin API configurada → simula el flujo post-compra (/gracias).
  */
 export function CheckoutButton({
   courseSlug,
@@ -15,17 +15,18 @@ export function CheckoutButton({
 }: { courseSlug: string } & ButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const API = process.env.NEXT_PUBLIC_API_URL;
 
   async function go() {
     setLoading(true);
     setError(null);
-    // Modo demo (sin Stripe): simula el pago y muestra el flujo post-compra.
-    if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+    // Sin backend: simula el pago y muestra el flujo post-compra.
+    if (!API) {
       window.location.href = "/gracias";
       return;
     }
     try {
-      const res = await fetch("/api/checkout", {
+      const res = await fetch(`${API}/checkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ courseSlug }),

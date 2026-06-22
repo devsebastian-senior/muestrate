@@ -20,6 +20,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import { Reveal } from "@/components/site/reveal";
+import { Logo } from "@/components/site/logo";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Countdown } from "@/components/marketing/countdown";
@@ -98,7 +99,10 @@ export default function LandingPage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative mx-auto max-w-6xl px-6 pb-24 pt-36 text-center md:pt-44">
+      <section className="relative mx-auto max-w-6xl px-6 pb-24 pt-16 text-center md:pt-24">
+        <div className="mb-12 flex justify-center">
+          <Logo />
+        </div>
         <Reveal>
           <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] glass px-4 py-1.5 text-xs font-medium text-[var(--color-muted)]">
             <Sparkles className="size-3.5 text-[var(--color-cyan)]" />

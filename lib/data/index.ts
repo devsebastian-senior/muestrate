@@ -5,7 +5,7 @@
  * función por la query real (Drizzle). Las pantallas NO cambian: consumen estos
  * view-models (lib/data/types). Cada función marca con `// TODO(db)` dónde va la query.
  */
-import { isDemoMode } from "@/lib/demo";
+import { apiEnabled, apiGet } from "@/lib/api";
 import type {
   AdminStats,
   CourseVM,
@@ -79,13 +79,12 @@ function allLessons(c: CourseVM) {
 // ── Queries (alumno) ───────────────────────────────────────────
 
 export async function getCourse(slug: string): Promise<CourseVM | null> {
-  if (isDemoMode()) return slug === DEMO_COURSE.slug ? DEMO_COURSE : null;
-  // TODO(db): db.query.courses.findFirst({ where eq(slug), with: { modules: { with: lessons } } })
+  if (apiEnabled()) return apiGet<CourseVM>(`/courses/${slug}`);
   return slug === DEMO_COURSE.slug ? DEMO_COURSE : null;
 }
 
-export async function getDashboard(_userId: string): Promise<DashboardVM> {
-  // TODO(db): join entitlements + progress del usuario para % real y nextLesson.
+export async function getDashboard(_userId: string): Promise<DashboardVM | null> {
+  if (apiEnabled()) return apiGet<DashboardVM>(`/me/dashboard`, { auth: true });
   const course = DEMO_COURSE;
   const lessons = allLessons(course);
   const completed = lessons.filter((l) => l.completed).length;
@@ -101,16 +100,13 @@ export async function getDashboard(_userId: string): Promise<DashboardVM> {
 }
 
 export async function getLessonDetail(lessonId: string): Promise<LessonDetailVM | null> {
+  if (apiEnabled()) return apiGet<LessonDetailVM>(`/me/lessons/${lessonId}`, { auth: true });
+
   const course = DEMO_COURSE;
   const lessons = allLessons(course);
   const index = lessons.findIndex((l) => l.id === lessonId);
   if (index === -1) return null;
   const lesson = lessons[index];
-
-  // TODO(db): 1) getCurrentUser  2) hasCourseAccess(user, course)  3) si OK y videoId:
-  //           embedUrl = video.getSignedPlayback(lesson.videoId).embedUrl
-  const embedUrl: string | null = null;
-
   return {
     lesson,
     courseSlug: course.slug,
@@ -118,30 +114,39 @@ export async function getLessonDetail(lessonId: string): Promise<LessonDetailVM 
     total: lessons.length,
     prevId: lessons[index - 1]?.id ?? null,
     nextId: lessons[index + 1]?.id ?? null,
-    embedUrl,
+    embedUrl: null,
     resources: DEMO_RESOURCES,
   };
 }
 
 // ── Queries (admin) ────────────────────────────────────────────
 
-export async function getCourseForAdmin(): Promise<CourseVM> {
-  // TODO(db): course principal con módulos/lecciones para edición.
+export async function getCourseForAdmin(): Promise<CourseVM | null> {
+  if (apiEnabled()) return apiGet<CourseVM>(`/admin/course`, { auth: true });
   return DEMO_COURSE;
 }
 
 export async function getAdminStats(): Promise<AdminStats> {
-  // TODO(db): count(entitlements), sum(orders.amount where paid), count(lessons), conversión de funnel (PostHog).
+  if (apiEnabled()) {
+    return (
+      (await apiGet<AdminStats>(`/admin/stats`, { auth: true })) ?? {
+        students: 0,
+        revenueCents: 0,
+        lessons: 0,
+        conversionPct: 0,
+      }
+    );
+  }
   const lessons = allLessons(DEMO_COURSE).length;
   return { students: 3512, revenueCents: 10400000, lessons, conversionPct: 4.8 };
 }
 
 export async function listStudents(): Promise<StudentRow[]> {
-  // TODO(db): join profiles + entitlements + progress agregado.
+  if (apiEnabled()) return (await apiGet<StudentRow[]>(`/admin/students`, { auth: true })) ?? [];
   return DEMO_STUDENTS;
 }
 
 export async function listOrders(): Promise<OrderRow[]> {
-  // TODO(db): select * from orders order by created_at desc.
+  if (apiEnabled()) return (await apiGet<OrderRow[]>(`/admin/orders`, { auth: true })) ?? [];
   return DEMO_ORDERS;
 }
