@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
 /** Rutas privadas (la plataforma del curso). Todo lo demás es público (funnel). */
-const PROTECTED = ["/dashboard", "/curso", "/leccion", "/cuenta", "/configuracion", "/admin"];
+const PROTECTED = ["/dashboard", "/curso", "/leccion", "/cuenta", "/configuracion", "/admin", "/certificado"];
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });

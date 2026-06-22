@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, GraduationCap, Settings, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, GraduationCap, Award, Settings, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const NAV = [
   { href: "/dashboard", label: "Inicio", icon: LayoutDashboard },
   { href: "/curso/muestrate-fundamentos", label: "Mi curso", icon: GraduationCap },
+  { href: "/certificado", label: "Certificado", icon: Award },
   { href: "/configuracion", label: "Configuración", icon: Settings },
 ];
 

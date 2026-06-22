@@ -13,6 +13,12 @@ function configured() {
   return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 }
 
+/** true cuando NO hay Supabase (modo demo). Las pantallas lo usan para que los
+ *  botones entren directo a la plataforma y poder recorrer todo el flujo. */
+export function authDemo() {
+  return !configured();
+}
+
 function redirectUrl(next = "/dashboard") {
   return `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
 }

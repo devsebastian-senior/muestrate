@@ -19,6 +19,11 @@ export function CheckoutButton({
   async function go() {
     setLoading(true);
     setError(null);
+    // Modo demo (sin Stripe): simula el pago y muestra el flujo post-compra.
+    if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+      window.location.href = "/gracias";
+      return;
+    }
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",

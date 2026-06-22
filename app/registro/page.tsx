@@ -7,7 +7,7 @@ import { AuthShell, OrDivider } from "@/components/auth/auth-shell";
 import { GoogleButton } from "@/components/auth/google-button";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
-import { signUpWithPassword } from "@/lib/auth/actions";
+import { signUpWithPassword, authDemo } from "@/lib/auth/actions";
 
 export default function RegistroPage() {
   const [fullName, setFullName] = useState("");
@@ -18,6 +18,7 @@ export default function RegistroPage() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (authDemo()) return void (window.location.href = "/dashboard");
     if (password.length < 6) return setError("La contraseña debe tener al menos 6 caracteres.");
     setStatus("loading");
     setError(null);

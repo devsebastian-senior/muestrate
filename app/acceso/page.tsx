@@ -8,7 +8,7 @@ import { GoogleButton } from "@/components/auth/google-button";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { signInWithPassword, signInWithMagicLink } from "@/lib/auth/actions";
+import { signInWithPassword, signInWithMagicLink, authDemo } from "@/lib/auth/actions";
 
 export default function AccesoPage() {
   return (
@@ -56,6 +56,7 @@ function PasswordForm() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (authDemo()) return void (window.location.href = "/dashboard");
     setLoading(true);
     setError(null);
     const { error } = await signInWithPassword(email, password);
@@ -118,6 +119,7 @@ function MagicForm() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (authDemo()) return void (window.location.href = "/dashboard");
     setStatus("loading");
     setError(null);
     const { error } = await signInWithMagicLink(email);

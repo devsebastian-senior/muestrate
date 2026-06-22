@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { signInWithGoogle } from "@/lib/auth/actions";
+import { signInWithGoogle, authDemo } from "@/lib/auth/actions";
 
 export function GoogleButton({ next, label = "Continuar con Google" }: { next?: string; label?: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function go() {
+    if (authDemo()) return void (window.location.href = "/dashboard");
     setLoading(true);
     setError(null);
     const { error } = await signInWithGoogle(next);
