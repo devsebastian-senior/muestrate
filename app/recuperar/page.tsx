@@ -31,7 +31,7 @@ export default function RecuperarPage() {
       title="Recuperar contraseña"
       subtitle="Te enviamos un enlace para crear una nueva"
       footer={
-        <Link href="/acceso" className="font-medium text-[var(--color-fg)] hover:underline">
+        <Link href="/acccesomuestrate" className="font-medium text-[var(--color-fg)] hover:underline">
           Volver a iniciar sesión
         </Link>
       }

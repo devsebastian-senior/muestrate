@@ -12,7 +12,7 @@ export function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-[var(--color-muted)]">
-          <Link href="/acceso" className="hover:text-[var(--color-fg)]">
+          <Link href="/acccesomuestrate" className="hover:text-[var(--color-fg)]">
             Iniciar sesión
           </Link>
           <Link href="/terminos" className="hover:text-[var(--color-fg)]">

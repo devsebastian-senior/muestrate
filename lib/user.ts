@@ -8,6 +8,7 @@ export interface AppUser {
   name: string;
   avatarUrl: string | null;
   isAdmin: boolean;
+  hasAccess: boolean; // tiene entitlement activo (puede entrar al curso)
 }
 
 export const DEMO_USER: AppUser = {
@@ -16,6 +17,7 @@ export const DEMO_USER: AppUser = {
   name: "Alumno Demo",
   avatarUrl: null,
   isAdmin: true, // en demo mostramos también el panel admin
+  hasAccess: true,
 };
 
 /** Iniciales para el avatar fallback. */

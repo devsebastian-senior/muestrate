@@ -52,7 +52,7 @@ export function Nav() {
         </nav>
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-            <Link href="/acceso">Iniciar sesión</Link>
+            <Link href="/acccesomuestrate">Iniciar sesión</Link>
           </Button>
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link href="#precio">Quiero entrar</Link>
@@ -85,7 +85,7 @@ export function Nav() {
             </nav>
             <div className="mt-3 flex flex-col gap-2 border-t border-[var(--color-border)] pt-3">
               <Button asChild variant="glass" size="sm">
-                <Link href="/acceso" onClick={() => setOpen(false)}>
+                <Link href="/acccesomuestrate" onClick={() => setOpen(false)}>
                   Iniciar sesión
                 </Link>
               </Button>

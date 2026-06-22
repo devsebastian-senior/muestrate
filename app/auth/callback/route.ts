@@ -20,5 +20,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/acceso?error=enlace_invalido`);
+  return NextResponse.redirect(`${origin}/acccesomuestrate?error=enlace_invalido`);
 }

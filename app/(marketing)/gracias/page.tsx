@@ -28,7 +28,7 @@ export default function GraciasPage() {
 
         <div className="mt-8">
           <Button asChild size="lg">
-            <Link href="/acceso">Ir a iniciar sesión</Link>
+            <Link href="/acccesomuestrate">Ir a iniciar sesión</Link>
           </Button>
         </div>
         <p className="mt-4 text-xs text-[var(--color-muted)]">

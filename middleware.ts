@@ -39,7 +39,7 @@ export async function middleware(request: NextRequest) {
 
   if (isProtected && !user) {
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/acceso";
+    redirectUrl.pathname = "/acccesomuestrate";
     redirectUrl.searchParams.set("next", path);
     return NextResponse.redirect(redirectUrl);
   }

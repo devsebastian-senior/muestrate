@@ -28,5 +28,6 @@ export async function getSessionUser(): Promise<AppUser> {
     name: profile?.name ?? user.user_metadata?.full_name ?? user.email?.split("@")[0] ?? "Alumno",
     avatarUrl: profile?.avatarUrl ?? user.user_metadata?.avatar_url ?? null,
     isAdmin: profile?.isAdmin ?? false,
+    hasAccess: profile?.hasAccess ?? false,
   };
 }

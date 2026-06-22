@@ -11,7 +11,7 @@ export default function VerificarPage() {
       title="Revisa tu correo"
       subtitle="Te enviamos un enlace para confirmar tu cuenta"
       footer={
-        <Link href="/acceso" className="font-medium text-[var(--color-fg)] hover:underline">
+        <Link href="/acccesomuestrate" className="font-medium text-[var(--color-fg)] hover:underline">
           Volver a iniciar sesión
         </Link>
       }
