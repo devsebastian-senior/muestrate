@@ -351,3 +351,38 @@ npm run build                              # parar dev antes
 # Git (SSH)
 git add -A && git commit -m "msg" && git push
 ```
+
+---
+
+## 21. 🔄 Actualización — 3ª app (Admin separado) + marketing + video
+
+**Arquitectura ahora = 3 repos:**
+```
+muestrate (alumno, :3000) ─┐
+muestrate-admin (:3001)    ─┤──► muestrate-api (:8787) ──► Supabase
+(panel admin separado)     ─┘     (backend real)
+```
+- **muestrate-admin** — `github.com/devsebastian-senior/muestrate-admin`. Panel admin en app aparte, misma marca, consume el API. Login admin (Supabase, gatea `is_admin`). Pantallas: Resumen (métricas + gráficas), Contenido (**CRUD de módulos/lecciones + subir video**), Alumnos, Ventas, **Marketing** (banners rotativos + campañas email + "notificar nuevo módulo"), Ajustes (novedad).
+- El `/admin` viejo dentro del app del alumno quedó redundante (se puede quitar).
+
+**Nuevo en backend/DB:**
+- Tablas `banners` + `email_campaigns` (migración 0002), columnas `courses.news_active/news_text` + `profiles.notify_updates` (migración 0001).
+- Endpoints: `/banners` (público), `/admin/banners` CRUD, `/admin/campaigns` (+`/audience`), `/admin/news`, `/me/preferences`, **CRUD `/admin/modules` y `/admin/lessons`**, `/admin/videos` (crea video Bunny + firma **TUS**).
+- **Rate limiting** por IP + pool de conexiones + paginación admin.
+
+**Subir video (Bunny Stream):**
+- Modal con validación cliente: formato (MP4/MOV/WebM/MKV), **máx 5 GB, 240 min, ≤1080p rec (hasta 4K)**.
+- Subida directa navegador→Bunny vía **TUS presignado** (firma en el server, API key nunca sale). Demo: simula progreso.
+- Límites en `muestrate-admin/components/panel/video-upload.tsx` (`VIDEO_LIMITS`).
+
+**UI optimista:** editor de contenido y marketing usan `useState` — el cambio se ve al instante y persiste al API (patrón optimista). Dashboard admin con métricas derivadas reales (distribución de progreso, ingresos por pasarela, top alumno).
+
+**Novedades (opcional):** admin activa + escribe la novedad → banner en el dashboard del alumno; el alumno puede silenciar en Configuración (`notify_updates`).
+
+**Gotchas nuevos:**
+- **Componentes cliente**: importar `AppUser`/`initials` de `lib/user` (NO `lib/session` → arrastra `next/headers` y rompe build).
+- **Supabase free tier se PAUSA** tras ~1 semana inactivo → error `tenant/user ... not found` en el pooler + DNS del host de auth cae. Fix: dashboard → **Restore project** (~2-5 min).
+- **TUS**: `tus-js-client` en el admin para subir a Bunny.
+
+**Pendiente (actualizado):** aplicar migraciones 0001+0002 en Supabase (cuando esté restaurado); conectar Bunny (keys) para video real; Resend (email real); Stripe (Fase 4); deploy admin en `admin.dominio`; quitar `/admin` del app del alumno.
+
