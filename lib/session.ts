@@ -32,5 +32,6 @@ export const getSessionUser = cache(async function getSessionUser(): Promise<App
     avatarUrl: profile?.avatarUrl ?? user.user_metadata?.avatar_url ?? null,
     isAdmin: profile?.isAdmin ?? false,
     hasAccess: profile?.hasAccess ?? false,
+    notifyUpdates: profile?.notifyUpdates ?? true,
   };
 });

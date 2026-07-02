@@ -31,6 +31,9 @@ export interface CourseVM {
   status: "draft" | "published" | "archived";
   coverUrl: string | null;
   modules: ModuleVM[];
+  /** Novedad activada por el admin (banner para alumnos). */
+  newsActive: boolean;
+  newsText: string | null;
 }
 
 export interface DashboardVM {

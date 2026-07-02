@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Play, GraduationCap, Clock, TrendingUp } from "lucide-react";
+import { Play, GraduationCap, Clock, TrendingUp, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getDashboard } from "@/lib/data";
@@ -32,6 +32,14 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">
       <p className="text-sm text-[var(--color-muted)]">Bienvenido de vuelta 👋</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Tu aprendizaje</h1>
+
+      {/* Novedad (activada por el admin; el usuario puede silenciarla en Configuración) */}
+      {course.newsActive && course.newsText && user.notifyUpdates ? (
+        <div className="mt-6 flex items-start gap-3 rounded-[var(--radius-xl)] border border-[var(--color-violet)]/30 bg-[var(--color-violet)]/10 p-4">
+          <Sparkles className="mt-0.5 size-5 shrink-0 text-[var(--color-violet)]" />
+          <p className="text-sm text-[var(--color-fg)]">{course.newsText}</p>
+        </div>
+      ) : null}
 
       {/* Continuar aprendiendo */}
       <Card className="mt-8 overflow-hidden p-0">

@@ -7,6 +7,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { updateProfile, updatePassword } from "@/lib/auth/actions";
+import { apiPatch } from "@/lib/client-api";
 import { initials, type AppUser } from "@/lib/user";
 
 export function SettingsTabs({ user }: { user: AppUser }) {
@@ -26,7 +27,7 @@ export function SettingsTabs({ user }: { user: AppUser }) {
         <SeguridadTab />
       </TabsContent>
       <TabsContent value="notificaciones">
-        <NotificacionesTab />
+        <NotificacionesTab notifyUpdates={user.notifyUpdates} />
       </TabsContent>
       <TabsContent value="facturacion">
         <FacturacionTab />
@@ -177,7 +178,16 @@ function Toggle({ label, desc, defaultOn = true }: { label: string; desc: string
   );
 }
 
-function NotificacionesTab() {
+function NotificacionesTab({ notifyUpdates }: { notifyUpdates: boolean }) {
+  const [news, setNews] = useState(notifyUpdates);
+
+  async function toggleNews() {
+    const next = !news;
+    setNews(next); // optimista
+    const { ok } = await apiPatch("/me/preferences", { notifyUpdates: next });
+    if (!ok) setNews(!next); // revertir si falla
+  }
+
   return (
     <Card>
       <div className="mb-4 flex items-center gap-2 text-[var(--color-cyan)]">
@@ -185,9 +195,30 @@ function NotificacionesTab() {
         <CardTitle>Notificaciones</CardTitle>
       </div>
       <div className="divide-y divide-[var(--color-border)]">
-        <Toggle label="Nuevas lecciones por email" desc="Avísame cuando se publique contenido nuevo." />
+        {/* Real: preferencia de novedades (persiste en el backend) */}
+        <div className="flex items-center justify-between gap-4 py-3">
+          <div>
+            <div className="text-sm font-medium">Novedades del curso</div>
+            <div className="text-xs text-[var(--color-muted)]">
+              Muéstrame el aviso cuando haya contenido nuevo.
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={toggleNews}
+            className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+              news ? "bg-[var(--color-violet)]" : "bg-[var(--color-surface-2)]"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 size-5 rounded-full bg-white transition-all ${
+                news ? "left-[1.375rem]" : "left-0.5"
+              }`}
+            />
+          </button>
+        </div>
         <Toggle label="Recordatorios por WhatsApp" desc="Mantén tu racha de aprendizaje." />
-        <Toggle label="Novedades y promociones" desc="Ofertas y lanzamientos." defaultOn={false} />
+        <Toggle label="Promociones" desc="Ofertas y lanzamientos." defaultOn={false} />
       </div>
     </Card>
   );

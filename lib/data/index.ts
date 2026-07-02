@@ -33,6 +33,8 @@ const DEMO_COURSE: CourseVM = {
   currency: "USD",
   status: "published",
   coverUrl: null,
+  newsActive: true,
+  newsText: "🎉 Nueva lección disponible: «El framework de contenido viral». ¡Ya puedes verla!",
   modules: [
     {
       id: "m1",
