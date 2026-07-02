@@ -8,9 +8,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // CTA principal: gradiente neón + glow
+        // CTA principal: gradiente malva → rosa (texto blanco legible) + glow suave
         primary:
-          "bg-gradient-to-r from-[var(--color-violet)] via-[var(--color-fuchsia)] to-[var(--color-cyan)] text-white shadow-[0_0_40px_-10px_var(--color-violet)] hover:shadow-[0_0_60px_-8px_var(--color-fuchsia)] hover:-translate-y-0.5",
+          "bg-gradient-to-r from-[var(--color-violet)] to-[var(--color-fuchsia)] text-white shadow-[0_14px_30px_-12px_var(--color-violet)] hover:shadow-[0_18px_40px_-10px_var(--color-fuchsia)] hover:-translate-y-0.5",
         glass:
           "glass text-[var(--color-fg)] hover:bg-[var(--color-surface-2)] border-gradient",
         ghost: "text-[var(--color-muted)] hover:text-[var(--color-fg)] hover:bg-[var(--color-surface)]",

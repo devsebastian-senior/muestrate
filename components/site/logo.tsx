@@ -1,23 +1,30 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export function Logo({ className, href = "/" }: { className?: string; href?: string }) {
+/**
+ * Logotipo de marca "Muéstrate by Andrea Cardona".
+ * Wordmark cursivo (Pacifico ≈ lettering redondeado), "te" en gris-malva,
+ * y firma "BY ANDREA CARDONA" en sans con tracking.
+ */
+export function Logo({
+  className,
+  href = "/",
+  showByline = true,
+}: {
+  className?: string;
+  href?: string;
+  showByline?: boolean;
+}) {
   return (
-    <Link href={href} className={cn("group inline-flex items-center gap-2.5", className)}>
-      <span className="relative grid size-9 place-items-center rounded-xl bg-gradient-to-br from-[var(--color-violet)] via-[var(--color-fuchsia)] to-[var(--color-cyan)] shadow-[0_0_24px_-6px_var(--color-violet)] transition-transform duration-300 group-hover:scale-105">
-        <svg viewBox="0 0 24 24" className="size-5 text-white" fill="none">
-          <path
-            d="M4 18V8.5a1 1 0 0 1 1.6-.8l4.4 3.3 4.4-3.3a1 1 0 0 1 1.6.8V18"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+    <Link href={href} className={cn("group inline-flex flex-col leading-none", className)}>
+      <span className="font-script text-2xl lowercase tracking-tight text-[var(--color-violet)] transition-opacity group-hover:opacity-90">
+        muéstra<span className="text-[var(--color-muted)]">te</span>
       </span>
-      <span className="text-lg font-bold tracking-tight">
-        Mu<span className="text-gradient">éstrate</span>
-      </span>
+      {showByline ? (
+        <span className="mt-1 text-[9px] font-medium uppercase tracking-[0.32em] text-[var(--color-muted)]">
+          by Andrea Cardona
+        </span>
+      ) : null}
     </Link>
   );
 }

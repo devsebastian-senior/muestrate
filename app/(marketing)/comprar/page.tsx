@@ -271,11 +271,13 @@ function FieldStep({
     ref.current?.focus();
   }, []);
 
+  const preview = process.env.NEXT_PUBLIC_PREVIEW_MODE === "true";
   const valid = type === "email" ? /.+@.+\..+/.test(value) : value.trim().length > 1;
+  const canNext = valid || preview; // en preview se avanza sin llenar
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (valid) onNext();
+    if (canNext) onNext();
   }
 
   return (
@@ -300,7 +302,7 @@ function FieldStep({
           <Button type="button" variant="ghost" onClick={onBack}>
             <ArrowLeft className="size-4" /> Atrás
           </Button>
-          <Button type="submit" size="lg" disabled={!valid}>
+          <Button type="submit" size="lg" disabled={!canNext}>
             Continuar <ArrowRight className="size-4" />
           </Button>
         </div>

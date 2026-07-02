@@ -1,38 +1,39 @@
 @import "tailwindcss";
 
 /* ────────────────────────────────────────────────────────────
-   MUÉSTRATE — sistema de diseño futurista
-   Base oscura "deep space", acentos neón violeta→cian→fucsia,
-   glassmorphism, mesh aurora animado, glow.
+   MUÉSTRATE by Andrea Cardona — sistema de diseño de marca
+   Claro y elegante: fondo crema, acentos lila / malva / gris.
+   Minimalismo, autenticidad, elegancia.
    ──────────────────────────────────────────────────────────── */
 
 @theme {
-  /* Superficies */
-  --color-base: #05060f;
-  --color-surface: #0b0d1c;
-  --color-surface-2: #11142a;
-  --color-border: #23264a;
+  /* Superficies (claras, cálidas) */
+  --color-base: #f4eee8;       /* crema de marca */
+  --color-surface: #ffffff;    /* tarjetas (blanco) */
+  --color-surface-2: #f1e9e2;  /* relleno suave */
+  --color-border: #e6dcd3;     /* borde cálido */
 
   /* Texto */
-  --color-fg: #f3f4ff;
-  --color-muted: #9aa0c4;
+  --color-fg: #423b47;         /* malva-carbón */
+  --color-muted: #8f8896;      /* gris-malva */
 
-  /* Acentos neón */
-  --color-violet: #7c5cff;
-  --color-cyan: #22d3ee;
-  --color-fuchsia: #e94bd9;
-  --color-lime: #b6ff5c;
+  /* Acentos de marca (lavanda / malva / rosa) */
+  --color-violet: #9c88ae;     /* malva (primario) */
+  --color-cyan: #c2b2d6;       /* lila (secundario) */
+  --color-fuchsia: #a85c84;    /* rosa malva (alerta/acento profundo) */
+  --color-lime: #7c9a6a;       /* salvia (éxito) */
 
   /* Radios */
   --radius-xl: 1.25rem;
   --radius-2xl: 1.75rem;
 
-  /* Fuentes (inyectadas por next/font como variables) */
+  /* Fuentes */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, monospace;
+  --font-script: var(--font-pacifico), "Brush Script MT", cursive;
 
   /* Animaciones */
-  --animate-aurora: aurora 18s ease-in-out infinite;
+  --animate-aurora: aurora 22s ease-in-out infinite;
   --animate-float: float 7s ease-in-out infinite;
   --animate-shimmer: shimmer 2.5s linear infinite;
   --animate-pulse-glow: pulseGlow 4s ease-in-out infinite;
@@ -40,8 +41,8 @@
 
 @keyframes aurora {
   0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-  33% { transform: translate(6%, -4%) rotate(8deg) scale(1.1); }
-  66% { transform: translate(-5%, 5%) rotate(-6deg) scale(0.95); }
+  33% { transform: translate(5%, -3%) rotate(6deg) scale(1.08); }
+  66% { transform: translate(-4%, 4%) rotate(-5deg) scale(0.96); }
 }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -52,8 +53,8 @@
   100% { background-position: 200% 0; }
 }
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
 }
 
 * {
@@ -74,22 +75,22 @@ body {
 
 /* ── Utilidades de marca ───────────────────────────────────── */
 
-/* Texto con gradiente neón */
+/* Texto con gradiente malva → lila → rosa */
 .text-gradient {
-  background-image: linear-gradient(110deg, var(--color-violet), var(--color-cyan) 50%, var(--color-fuchsia));
+  background-image: linear-gradient(110deg, var(--color-violet), var(--color-cyan) 45%, var(--color-fuchsia));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Tarjeta de cristal */
+/* Tarjeta de cristal (frosted claro) */
 .glass {
-  background: color-mix(in oklab, var(--color-surface) 70%, transparent);
+  background: color-mix(in oklab, var(--color-surface) 72%, transparent);
   backdrop-filter: blur(16px);
-  border: 1px solid color-mix(in oklab, var(--color-border) 80%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-border) 90%, transparent);
 }
 
-/* Borde con gradiente (truco con mask) */
+/* Borde con gradiente sutil */
 .border-gradient {
   position: relative;
 }
@@ -103,32 +104,32 @@ body {
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0.6;
+  opacity: 0.5;
   pointer-events: none;
 }
 
-/* Glow suave */
+/* Glow suave malva */
 .glow {
-  box-shadow: 0 0 60px -15px color-mix(in oklab, var(--color-violet) 60%, transparent);
+  box-shadow: 0 18px 50px -20px color-mix(in oklab, var(--color-violet) 55%, transparent);
 }
 
-/* Rejilla de fondo */
+/* Rejilla de fondo (muy sutil) */
 .bg-grid {
   background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--color-border) 40%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--color-border) 40%, transparent) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in oklab, var(--color-border) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-border) 55%, transparent) 1px, transparent 1px);
   background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 35%, transparent 100%);
 }
 
 /* Botón shimmer */
 .shimmer {
   background-size: 200% 100%;
-  background-image: linear-gradient(110deg, transparent 40%, color-mix(in oklab, #fff 25%, transparent) 50%, transparent 60%);
+  background-image: linear-gradient(110deg, transparent 40%, color-mix(in oklab, #fff 40%, transparent) 50%, transparent 60%);
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--color-violet) 50%, transparent);
+  background: color-mix(in oklab, var(--color-violet) 28%, transparent);
 }
 
 /* Scrollbar */

@@ -2,14 +2,14 @@ import { redirect } from "next/navigation";
 import { Sidebar } from "@/components/app/sidebar";
 import { Topbar } from "@/components/app/topbar";
 import { getSessionUser } from "@/lib/session";
-import { isDemoMode } from "@/lib/demo";
+import { isDemoMode, previewMode } from "@/lib/demo";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await getSessionUser();
 
   // Gate de acceso: solo entran alumnos con compra activa o admins.
-  // (middleware ya exigió login; aquí exigimos entitlement).
-  if (!user.isAdmin && !user.hasAccess) redirect("/comprar");
+  // (middleware ya exigió login; aquí exigimos entitlement). En preview se omite.
+  if (!previewMode() && !user.isAdmin && !user.hasAccess) redirect("/comprar");
 
   return (
     <div className="flex min-h-dvh bg-[var(--color-base)]">

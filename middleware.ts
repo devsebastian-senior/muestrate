@@ -9,6 +9,9 @@ const PROTECTED = ["/dashboard", "/curso", "/leccion", "/cuenta", "/configuracio
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
 
+  // Modo preview: sin protección, se puede recorrer todo solo con botones.
+  if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") return response;
+
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 

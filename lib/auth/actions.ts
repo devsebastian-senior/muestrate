@@ -13,10 +13,10 @@ function configured() {
   return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 }
 
-/** true cuando NO hay Supabase (modo demo). Las pantallas lo usan para que los
- *  botones entren directo a la plataforma y poder recorrer todo el flujo. */
+/** true cuando NO hay Supabase (demo) o en modo preview. Las pantallas lo usan
+ *  para que los botones entren directo a la plataforma sin login real. */
 export function authDemo() {
-  return !configured();
+  return !configured() || process.env.NEXT_PUBLIC_PREVIEW_MODE === "true";
 }
 
 function redirectUrl(next = "/dashboard") {
