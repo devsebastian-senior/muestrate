@@ -5,6 +5,7 @@
  * Tipos/utilidades client-safe viven en lib/user.ts (no importar este módulo
  * desde componentes cliente: usa next/headers vía auth/server).
  */
+import { cache } from "react";
 import { getCurrentUser } from "@/lib/auth/server";
 import { supabaseConfigured } from "@/lib/demo";
 import { apiGet } from "@/lib/api";
@@ -13,7 +14,9 @@ import { DEMO_USER, type AppUser } from "@/lib/user";
 export type { AppUser } from "@/lib/user";
 export { DEMO_USER, initials } from "@/lib/user";
 
-export async function getSessionUser(): Promise<AppUser> {
+// cache(): dedupe por request → layout + sub-layout + página comparten 1 sola
+// llamada a /me/profile en vez de 3.
+export const getSessionUser = cache(async function getSessionUser(): Promise<AppUser> {
   if (!supabaseConfigured()) return DEMO_USER;
 
   const user = await getCurrentUser();
@@ -30,4 +33,4 @@ export async function getSessionUser(): Promise<AppUser> {
     isAdmin: profile?.isAdmin ?? false,
     hasAccess: profile?.hasAccess ?? false,
   };
-}
+});
