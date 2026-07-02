@@ -7,6 +7,7 @@
  */
 import { apiEnabled, apiGet } from "@/lib/api";
 import { previewMode } from "@/lib/demo";
+import type { BannerVM } from "./types";
 
 /** Usar datos demo: sin API conectada, o en modo preview (recorrer sin backend). */
 const apiActive = () => apiEnabled() && !previewMode();
@@ -155,4 +156,15 @@ export async function listStudents(): Promise<StudentRow[]> {
 export async function listOrders(): Promise<OrderRow[]> {
   if (apiActive()) return (await apiGet<OrderRow[]>(`/admin/orders`, { auth: true })) ?? [];
   return DEMO_ORDERS;
+}
+
+const DEMO_BANNERS: BannerVM[] = [
+  { id: "b1", title: "Nuevo módulo", text: "🎉 «Estrategia de contenido» ya está disponible.", ctaLabel: "Ver módulo", ctaHref: "/curso/muestrate-fundamentos", active: true, sortOrder: 1 },
+  { id: "b2", title: "Q&A en vivo", text: "📅 Sesión de preguntas este viernes 7pm.", ctaLabel: null, ctaHref: null, active: true, sortOrder: 2 },
+];
+
+/** Banners rotativos activos (público). */
+export async function getBanners(): Promise<BannerVM[]> {
+  if (apiActive()) return (await apiGet<BannerVM[]>(`/banners`)) ?? [];
+  return DEMO_BANNERS;
 }

@@ -2,14 +2,15 @@ import Link from "next/link";
 import { Play, GraduationCap, Clock, TrendingUp, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getDashboard } from "@/lib/data";
+import { RotatingBanner } from "@/components/app/rotating-banner";
+import { getDashboard, getBanners } from "@/lib/data";
 import { getSessionUser } from "@/lib/session";
 
 export const metadata = { title: "Inicio" };
 
 export default async function DashboardPage() {
   const user = await getSessionUser();
-  const data = await getDashboard(user.id);
+  const [data, banners] = await Promise.all([getDashboard(user.id), getBanners()]);
 
   if (!data) {
     return (
@@ -33,7 +34,8 @@ export default async function DashboardPage() {
       <p className="text-sm text-[var(--color-muted)]">Bienvenido de vuelta 👋</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Tu aprendizaje</h1>
 
-      {/* Novedad (activada por el admin; el usuario puede silenciarla en Configuración) */}
+      {/* Banners rotativos (marketing del admin) + novedad fija — el usuario puede silenciar en Configuración */}
+      {user.notifyUpdates ? <RotatingBanner banners={banners} /> : null}
       {course.newsActive && course.newsText && user.notifyUpdates ? (
         <div className="mt-6 flex items-start gap-3 rounded-[var(--radius-xl)] border border-[var(--color-violet)]/30 bg-[var(--color-violet)]/10 p-4">
           <Sparkles className="mt-0.5 size-5 shrink-0 text-[var(--color-violet)]" />

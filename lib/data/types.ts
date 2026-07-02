@@ -76,6 +76,16 @@ export interface OrderRow {
   createdAt: string; // ISO
 }
 
+export interface BannerVM {
+  id: string;
+  title: string;
+  text: string | null;
+  ctaLabel: string | null;
+  ctaHref: string | null;
+  active: boolean;
+  sortOrder: number;
+}
+
 export interface AdminStats {
   students: number;
   revenueCents: number;
